@@ -1,0 +1,66 @@
+<!-- res/layout/history_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/box_rounded"
+    android:layout_marginTop="16dp">
+
+    <TextView
+        android:id="@+id/textView_dateTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:padding="4dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:id="@+id/textView_masuk_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Absen Masuk:"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/imageView_masuk"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_pulang_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Absen Pulang:"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/imageView_pulang"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

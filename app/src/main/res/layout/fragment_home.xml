@@ -1,0 +1,116 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment"
+    android:padding="16dp">
+
+    <FrameLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/box_rounded">
+        <TextView
+            android:id="@+id/date_month_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date Month Year"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:gravity="center"
+            android:layout_marginTop="20dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textView_absen_masuk_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Waktu Absen Masuk:"
+            android:gravity="center"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/centeredImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@mipmap/ic_tap_foreground"
+            android:background="@drawable/drawable_circle"
+            android:scaleType="centerCrop"
+            android:visibility="gone" /> <!-- Set visibility to gone initially -->
+
+        <TextView
+            android:id="@+id/textView_absen_pulang_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Waktu Absen Pulang:"
+            android:gravity="center"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/centeredImageViewPulang"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/drawable_circle"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/textView_already_attended"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absen sudah dilakukan hari ini"
+            android:layout_gravity="center_horizontal|center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:gravity="center"
+            android:visibility="gone" /> <!-- Initially hidden -->
+
+    </LinearLayout>
+
+
+    <!-- LinearLayout for buttons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_retake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retake"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginStart="10dp"
+            android:visibility="gone" />
+        <!-- Existing layout components -->
+
+        <Button
+            android:id="@+id/button_absen_pulang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absen Pulang"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</FrameLayout>
