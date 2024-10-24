@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,7 +19,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import android.Manifest
-import android.graphics.drawable.BitmapDrawable
 import android.os.Looper
 import android.os.Handler
 import android.util.Log
@@ -116,12 +112,11 @@ class HomeFragment : Fragment() {
         stopUpdatingTime()
     }
 
-    private fun initializeViews(view: View) {
-        dateMonthYearTextView = view.findViewById(R.id.date_month_year)
-        timeTextView = view.findViewById(R.id.time)
-        imageView = view.findViewById(R.id.centeredImageView)
-        // Set up click listeners etc.
-    }
+//    private fun initializeViews(view: View) {
+//        dateMonthYearTextView = view.findViewById(R.id.date_month_year)
+//        timeTextView = view.findViewById(R.id.time)
+//        imageView = view.findViewById(R.id.centeredImageView)
+//    }
 
     private fun startUpdatingTime() {
         handler = Handler(Looper.getMainLooper())
@@ -153,13 +148,36 @@ class HomeFragment : Fragment() {
         timeTextView.text = timeFormat.format(currentDate.time)
     }
 
+    private fun requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Request the permission
+            requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+        } else {
+            // Permission already granted, proceed with camera intent
+            dispatchTakePictureIntent()
+        }
+    }
+
+
     private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        if (ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestCameraPermission()  // Request permission if not granted
+        } else {
+            // Proceed to launch camera intent
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                }
             }
         }
     }
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -267,26 +285,22 @@ class HomeFragment : Fragment() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            REQUEST_CAMERA_PERMISSION -> {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // camera-related task you need to do.
-                    dispatchTakePictureIntent()
-                } else {
-                    // permission denied! Disable the
-                    // functionality that depends on this permission.
-                    Toast.makeText(context, "Camera permission is needed to use this feature", Toast.LENGTH_SHORT).show()
-                }
-                return
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with the camera intent
+                dispatchTakePictureIntent()
+            } else {
+                // Permission denied, show a message
+                Toast.makeText(context, "Camera permission is required to take photos", Toast.LENGTH_SHORT).show()
             }
-
-            // Add other 'when' lines to check for other
-            // permissions this app might request.
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
+
 
     private fun checkTodayAttendance() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
